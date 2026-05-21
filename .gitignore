@@ -1,0 +1,12 @@
+# OpenClaude / IDE
+.claude/
+.openclaude/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temp
+*.tmp
+*.log
