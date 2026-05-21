@@ -1,0 +1,4 @@
+# Render Blueprint - Static Site
+static_sites:
+  - name: fullscreen
+    publishPath: .
