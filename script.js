@@ -181,10 +181,16 @@ function initPartsForm() {
 
         // Codifica a mensagem para URL
         const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/message/23LXSDOFKGDJJ1?text=${encodedMessage}`;
+        // Usa o formato wa.me/NUMERO?text= que é mais confiável para manter o parâmetro
+        // (wa.me/message/ faz redirect e perde o ?text=)
+        const whatsappUrl = `https://wa.me/5585997713219?text=${encodedMessage}`;
 
-        // ABRE O WHATSAPP IMEDIATAMENTE (síncrono - não bloqueado pelo navegador)
-        window.open(whatsappUrl, '_blank');
+        // ABRE O WHATSAPP (com fallback se popup for bloqueado)
+        const win = window.open(whatsappUrl, '_blank');
+        if (!win || win.closed) {
+            // Fallback: redireciona a própria página se o popup foi bloqueado
+            window.location.href = whatsappUrl;
+        }
 
         // Mostra estado de sucesso (com pequeno delay para UX)
         setTimeout(() => {

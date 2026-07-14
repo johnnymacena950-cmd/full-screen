@@ -1,4 +1,15 @@
 # Render Blueprint - Static Site
+# Configuração para deploy automático via render.yaml
+# Use este arquivo conectando seu repositório GitHub ao Render e selecionando "Blueprint"
+
 static_sites:
   - name: fullscreen
     publishPath: .
+    buildCommand: ""
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
