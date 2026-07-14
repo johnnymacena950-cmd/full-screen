@@ -10,6 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollEffects();
     initCounterAnimation();
     initSmoothScroll();
+    // Inicializa EmailJS com a chave pública
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init('azh4RADsWAi8oclLf');
+    } else {
+        console.error('EmailJS CDN não carregou. Verifique sua conexão.');
+    }
+
     initFormSubmit();
     initPartsForm();
     initWhatsAppFloat();
@@ -463,39 +470,74 @@ function initWhatsAppFloat() {
    ============================================ */
 function initFormSubmit() {
     const form = document.querySelector('.contact-form');
+    if (!form) return;
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
 
         const btn = form.querySelector('.btn-submit');
         const originalHTML = btn.innerHTML;
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const subject = document.getElementById('subject');
+        const subjectText = subject.options[subject.selectedIndex]?.text || '';
+        const message = document.getElementById('message').value.trim();
 
         // Estado de loading
-        btn.innerHTML = '<span>Enviando...</span>';
+        btn.innerHTML = `
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="spin-icon">
+                <circle cx="12" cy="12" r="10" stroke-dasharray="31.4" stroke-dashoffset="10"/>
+            </svg>
+            <span>Enviando...</span>
+        `;
         btn.style.pointerEvents = 'none';
-        btn.style.opacity = '0.7';
+        btn.classList.add('btn-loading');
 
-        // Simula envio (substituir por fetch real)
-        setTimeout(() => {
+        // Envia via EmailJS
+        emailjs.send('service_osdicfc', 'template_8difevs', {
+            name: name,
+            email: email,
+            phone: phone,
+            from_subject: subjectText,
+            message: message,
+        }).then(() => {
             btn.innerHTML = `
-                <span>Mensagem Enviada!</span>
+                <span>Mensagem Enviada! ✅</span>
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                     <path d="M5 10l3 3l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             `;
+            btn.classList.remove('btn-loading');
+            btn.classList.add('btn-success');
             btn.style.borderColor = '#28c840';
             btn.style.boxShadow = '0 0 30px rgba(40, 200, 64, 0.3)';
 
             form.reset();
 
-            // Restaura o botão
             setTimeout(() => {
                 btn.innerHTML = originalHTML;
                 btn.style.pointerEvents = 'auto';
-                btn.style.opacity = '1';
+                btn.classList.remove('btn-success');
                 btn.style.borderColor = '';
                 btn.style.boxShadow = '';
-            }, 3000);
-        }, 1500);
+            }, 4000);
+        }, (error) => {
+            console.error('Erro ao enviar email:', error);
+            btn.innerHTML = `
+                <span>Erro ao enviar! Tente novamente</span>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <circle cx="10" cy="10" r="9" stroke="#ff5f57" stroke-width="2"/>
+                    <line x1="7" y1="7" x2="13" y2="13" stroke="#ff5f57" stroke-width="2"/>
+                    <line x1="13" y1="7" x2="7" y2="13" stroke="#ff5f57" stroke-width="2"/>
+                </svg>
+            `;
+            btn.classList.remove('btn-loading');
+
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.style.pointerEvents = 'auto';
+            }, 4000);
+        });
     });
 }
