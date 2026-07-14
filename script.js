@@ -105,7 +105,7 @@ function initPartsForm() {
         partCards.forEach(card => card.classList.add('part-card-visible'));
     }
 
-    // Submissão do formulário - Envio via WhatsApp
+    // Submissão do formulário - Envio via Email + WhatsApp
     form.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -138,62 +138,101 @@ function initPartsForm() {
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="spin-icon">
                 <circle cx="12" cy="12" r="10" stroke-dasharray="31.4" stroke-dashoffset="10"/>
             </svg>
-            <span>Abrindo WhatsApp...</span>
+            <span>Enviando...</span>
         `;
         btn.style.pointerEvents = 'none';
         btn.classList.add('btn-loading');
 
-        // Monta a mensagem formatada
-        let message = '🧑‍💼 *NOVO PEDIDO DE ORÇAMENTO* 🧑‍💼\n\n';
-        message += '─────────────────────\n';
-        message += '*📋 DADOS DO CLIENTE*\n';
-        message += '─────────────────────\n';
-        message += `👤 *Nome:* ${name}\n`;
-        message += `📞 *Telefone:* ${phone}\n`;
-        if (email) message += `📧 *E-mail:* ${email}\n`;
-        message += '\n─────────────────────\n';
-        message += '*💻 EQUIPAMENTO*\n';
-        message += '─────────────────────\n';
-        message += `📌 *Tipo:* ${equipTypeText}\n`;
-        if (brand) message += `🏷️ *Marca:* ${brand}\n`;
-        if (model) message += `📋 *Modelo:* ${model}\n`;
-        if (serial) message += `🔢 *Nº Série:* ${serial}\n`;
-        message += '\n─────────────────────\n';
-        message += '*🔧 PEÇAS PARA ENVIO*\n';
-        message += '─────────────────────\n';
+        // Monta a mensagem formatada para o WhatsApp
+        let whatsappMsg = '🧑‍💼 *NOVO PEDIDO DE ORÇAMENTO* 🧑‍💼\n\n';
+        whatsappMsg += '─────────────────────\n';
+        whatsappMsg += '*📋 DADOS DO CLIENTE*\n';
+        whatsappMsg += '─────────────────────\n';
+        whatsappMsg += `👤 *Nome:* ${name}\n`;
+        whatsappMsg += `📞 *Telefone:* ${phone}\n`;
+        if (email) whatsappMsg += `📧 *E-mail:* ${email}\n`;
+        whatsappMsg += '\n─────────────────────\n';
+        whatsappMsg += '*💻 EQUIPAMENTO*\n';
+        whatsappMsg += '─────────────────────\n';
+        whatsappMsg += `📌 *Tipo:* ${equipTypeText}\n`;
+        if (brand) whatsappMsg += `🏷️ *Marca:* ${brand}\n`;
+        if (model) whatsappMsg += `📋 *Modelo:* ${model}\n`;
+        if (serial) whatsappMsg += `🔢 *Nº Série:* ${serial}\n`;
+        whatsappMsg += '\n─────────────────────\n';
+        whatsappMsg += '*🔧 PEÇAS PARA ENVIO*\n';
+        whatsappMsg += '─────────────────────\n';
         if (checkedParts.length > 0) {
             checkedParts.forEach((part, i) => {
-                message += `  ${i + 1}. ${part}\n`;
+                whatsappMsg += `  ${i + 1}. ${part}\n`;
             });
         } else {
-            message += '  Nenhuma peça selecionada\n';
+            whatsappMsg += '  Nenhuma peça selecionada\n';
         }
-        message += '\n─────────────────────\n';
-        message += '*⚡ SERVIÇO*\n';
-        message += '─────────────────────\n';
-        message += `⏱️ *Urgência:* ${urgencyText}\n`;
-        message += `🔨 *Tipo:* ${serviceTypeText}\n`;
+        whatsappMsg += '\n─────────────────────\n';
+        whatsappMsg += '*⚡ SERVIÇO*\n';
+        whatsappMsg += '─────────────────────\n';
+        whatsappMsg += `⏱️ *Urgência:* ${urgencyText}\n`;
+        whatsappMsg += `🔨 *Tipo:* ${serviceTypeText}\n`;
         if (description) {
-            message += `\n📝 *Descrição:*\n${description}\n`;
+            whatsappMsg += `\n📝 *Descrição:*\n${description}\n`;
         }
-        message += '\n─────────────────────\n';
-        message += '✅ *Aguardando retorno!*';
+        whatsappMsg += '\n─────────────────────\n';
+        whatsappMsg += '✅ *Aguardando retorno!*';
 
-        // Codifica a mensagem para URL
-        const encodedMessage = encodeURIComponent(message);
-        // Usa o formato wa.me/NUMERO?text= que é mais confiável para manter o parâmetro
-        // (wa.me/message/ faz redirect e perde o ?text=)
-        const whatsappUrl = `https://wa.me/5585997713219?text=${encodedMessage}`;
-
-        // ABRE O WHATSAPP (com fallback se popup for bloqueado)
-        const win = window.open(whatsappUrl, '_blank');
-        if (!win || win.closed) {
-            // Fallback: redireciona a própria página se o popup foi bloqueado
-            window.location.href = whatsappUrl;
+        // Monta a mensagem formatada para o e-mail (sem markdown do WhatsApp)
+        let emailMsg = 'NOVO PEDIDO DE ORÇAMENTO\n\n';
+        emailMsg += '─────────────────────\n';
+        emailMsg += '📋 DADOS DO CLIENTE\n';
+        emailMsg += '─────────────────────\n';
+        emailMsg += `Nome: ${name}\n`;
+        emailMsg += `Telefone: ${phone}\n`;
+        if (email) emailMsg += `E-mail: ${email}\n`;
+        emailMsg += '\n─────────────────────\n';
+        emailMsg += '💻 EQUIPAMENTO\n';
+        emailMsg += '─────────────────────\n';
+        emailMsg += `Tipo: ${equipTypeText}\n`;
+        if (brand) emailMsg += `Marca: ${brand}\n`;
+        if (model) emailMsg += `Modelo: ${model}\n`;
+        if (serial) emailMsg += `Nº Série: ${serial}\n`;
+        emailMsg += '\n─────────────────────\n';
+        emailMsg += '🔧 PEÇAS PARA ENVIO\n';
+        emailMsg += '─────────────────────\n';
+        if (checkedParts.length > 0) {
+            checkedParts.forEach((part, i) => {
+                emailMsg += `  ${i + 1}. ${part}\n`;
+            });
+        } else {
+            emailMsg += '  Nenhuma peça selecionada\n';
         }
+        emailMsg += '\n─────────────────────\n';
+        emailMsg += '⚡ SERVIÇO\n';
+        emailMsg += '─────────────────────\n';
+        emailMsg += `Urgência: ${urgencyText}\n`;
+        emailMsg += `Tipo: ${serviceTypeText}\n`;
+        if (description) {
+            emailMsg += `\n📝 Descrição:\n${description}\n`;
+        }
+        emailMsg += '\n─────────────────────\n';
+        emailMsg += '✅ Aguardando retorno!';
 
-        // Mostra estado de sucesso (com pequeno delay para UX)
-        setTimeout(() => {
+        // 1. ENVIA E-MAIL VIA EMAILJS
+        emailjs.send('service_osdicfc', 'template_8difevs', {
+            name: name,
+            email: email || 'Não informado',
+            phone: phone,
+            from_subject: `Orçamento - ${serviceTypeText}`,
+            message: emailMsg,
+        }).then(() => {
+            // 2. E-MAIL ENVIADO - ABRE WHATSAPP PARA O CLIENTE
+            const encodedMessage = encodeURIComponent(whatsappMsg);
+            const whatsappUrl = `https://wa.me/5585997713219?text=${encodedMessage}`;
+
+            const win = window.open(whatsappUrl, '_blank');
+            if (!win || win.closed) {
+                window.location.href = whatsappUrl;
+            }
+
+            // Mostra estado de sucesso
             btn.innerHTML = `
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="20 6 9 17 4 12"/>
@@ -203,7 +242,6 @@ function initPartsForm() {
             btn.classList.remove('btn-loading');
             btn.classList.add('btn-success');
 
-            // Restaura o botão e reseta o formulário
             setTimeout(() => {
                 btn.innerHTML = originalHTML;
                 btn.style.pointerEvents = 'auto';
@@ -211,7 +249,24 @@ function initPartsForm() {
                 form.reset();
                 updatePartsCount();
             }, 5000);
-        }, 500);
+        }, (error) => {
+            // Erro ao enviar e-mail
+            console.error('Erro ao enviar e-mail do orçamento:', error);
+            btn.innerHTML = `
+                <span>Erro ao enviar! Tente novamente</span>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <circle cx="10" cy="10" r="9" stroke="#ff5f57" stroke-width="2"/>
+                    <line x1="7" y1="7" x2="13" y2="13" stroke="#ff5f57" stroke-width="2"/>
+                    <line x1="13" y1="7" x2="7" y2="13" stroke="#ff5f57" stroke-width="2"/>
+                </svg>
+            `;
+            btn.classList.remove('btn-loading');
+
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.style.pointerEvents = 'auto';
+            }, 4000);
+        });
     });
 }
 
