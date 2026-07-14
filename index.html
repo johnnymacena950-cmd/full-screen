@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Full Screen - Soluções em Informática</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='4' width='28' height='20' rx='3' fill='none' stroke='%2300e5ff' stroke-width='2'/%3E%3Cline x1='10' y1='28' x2='22' y2='28' stroke='%2300e5ff' stroke-width='2' stroke-linecap='round'/%3E%3Cline x1='16' y1='24' x2='16' y2='28' stroke='%2300e5ff' stroke-width='2'/%3E%3Ccircle cx='16' cy='14' r='5' fill='none' stroke='%230080ff' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='14' r='2' fill='%2300e5ff'/%3E%3C/svg%3E">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -25,6 +26,7 @@
             <ul class="nav-links">
                 <li><a href="#home" class="nav-link">Home</a></li>
                 <li><a href="#services" class="nav-link">Serviços</a></li>
+                <li><a href="#parts" class="nav-link">Orçamento</a></li>
                 <li><a href="#about" class="nav-link">Sobre</a></li>
                 <li><a href="#contact" class="nav-link">Contato</a></li>
             </ul>
@@ -55,12 +57,12 @@
                     <span>AV. Bernardo Manuel, n.8153</span>
                 </div>
                 <div class="hero-info-divider"></div>
-                <div class="hero-info-item">
+                <a href="https://wa.me/message/23LXSDOFKGDJJ1" target="_blank" rel="noopener" class="hero-info-item hero-whatsapp-link">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.08 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
                     </svg>
                     <span>(85) 99771-3219</span>
-                </div>
+                </a>
             </div>
             <div class="hero-buttons">
                 <a href="#contact" class="btn btn-primary">
@@ -192,6 +194,507 @@
         </div>
     </section>
 
+    <!-- Envio de Peças e Acessórios -->
+    <section id="parts" class="parts">
+        <div class="section-header">
+            <span class="section-tag">ORÇAMENTO</span>
+            <h2 class="section-title">Solicitar <span class="accent">Orçamento</span></h2>
+            <p class="section-desc">
+                Preencha os dados abaixo para solicitar um orçamento de envio de peças
+                e acessórios para manutenção do seu equipamento.
+            </p>
+        </div>
+
+        <div class="parts-container">
+            <form class="parts-form" id="partsForm">
+                <!-- Dados do Cliente -->
+                <div class="form-block">
+                    <div class="form-block-header">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                        <h3>Dados do Cliente</h3>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="parts-name">Nome Completo</label>
+                            <input type="text" id="parts-name" placeholder="Seu nome completo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="parts-phone">Telefone / WhatsApp</label>
+                            <input type="tel" id="parts-phone" placeholder="(00) 00000-0000" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="parts-email">E-mail</label>
+                            <input type="email" id="parts-email" placeholder="seu@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="parts-equip-type">Tipo de Equipamento</label>
+                            <select id="parts-equip-type" required>
+                                <option value="">Selecione o tipo</option>
+                                <option value="pc-desktop">PC Desktop</option>
+                                <option value="notebook">Notebook</option>
+                                <option value="acessorio">Acessório / Periférico</option>
+                                <option value="outro">Outro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row" id="equip-detail-row">
+                        <div class="form-group">
+                            <label for="parts-brand">Marca</label>
+                            <input type="text" id="parts-brand" placeholder="Ex: Dell, Samsung, Positivo...">
+                        </div>
+                        <div class="form-group">
+                            <label for="parts-model">Modelo</label>
+                            <input type="text" id="parts-model" placeholder="Ex: Inspiron 15, Galaxy Book...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="parts-serial">Número de Série (opcional)</label>
+                        <input type="text" id="parts-serial" placeholder="Ex: SN-1234567890">
+                    </div>
+                </div>
+
+                <!-- Peças para Envio -->
+                <div class="form-block">
+                    <div class="form-block-header">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="2" y="3" width="20" height="14" rx="2"/>
+                            <line x1="8" y1="21" x2="16" y2="21"/>
+                            <line x1="12" y1="17" x2="12" y2="21"/>
+                        </svg>
+                        <h3>Peças e Acessórios</h3>
+                        <span class="form-block-subtitle">Selecione as peças para envio</span>
+                    </div>
+                    
+                    <div class="parts-grid" id="partsGrid">
+                        <!-- PC / Notebook Parts -->
+                        <label class="part-card" data-category="interno">
+                            <input type="checkbox" name="parts" value="Processador (CPU)">
+                            <div class="part-card-content">
+                                <div class="part-card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <rect x="4" y="4" width="16" height="16" rx="2"/>
+                                        <rect x="9" y="9" width="6" height="6"/>
+                                        <path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M20 9h3M1 15h3M20 15h3"/>
+                                    </svg>
+                                </div>
+                                <span class="part-card-name">Processador (CPU)</span>
+                            </div>
+                        </label>
+
+                        <label class="part-card" data-category="interno">
+                            <input type="checkbox" name="parts" value="Placa-mãe">
+                            <div class="part-card-content">
+                                <div class="part-card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <rect x="2" y="2" width="20" height="20" rx="2"/>
+                                        <circle cx="7" cy="7" r="1.5" fill="currentColor"/>
+                                        <circle cx="17" cy="7" r="1.5" fill="currentColor"/>
+                                        <circle cx="7" cy="17" r="1.5" fill="currentColor"/>
+                                        <circle cx="17" cy="17" r="1.5" fill="currentColor"/>
+                                        <line x1="12" y1="2" x2="12" y2="6"/>
+                                        <line x1="12" y1="18" x2="12" y2="22"/>
+                                    </svg>
+                                </div>
+                                <span class="part-card-name">Placa-mãe</span>
+                            </div>
+                        </label>
+
+                        <label class="part-card" data-category="interno">
+                            <input type="checkbox" name="parts" value="Memória RAM">
+                            <div class="part-card-content">
+                                <div class="part-card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <rect x="4" y="6" width="16" height="12" rx="1"/>
+                                        <line x1="8" y1="6" x2="8" y2="18"/>
+                                        <line x1="12" y1="6" x2="12" y2="18"/>
+                                        <line x1="16" y1="6" x2="16" y2="18"/>
+                                        <path d="M4 9h16M4 15h16"/>
+                                    </svg>
+                                </div>
+                                <span class="part-card-name">Memória RAM</span>
+                            </div>
+                        </label>
+
+                        <label class="part-card" data-category="interno">
+                            <input type="checkbox" name="parts" value="HD / SSD">
+                            <div class="part-card-content">
+                                <div class="part-card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <rect x="4" y="2" width="16" height="20" rx="2"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                        <circle cx="12" cy="12" r="1" fill="currentColor"/>
+                                        <circle cx="17" cy="17" r="1" fill="currentColor"/>
+                                    </svg>
+                                </div>
+                                <span class="part-card-name">HD / SSD</span>
+                            </div>
+                        </label>
+
+                        <label class="part-card" data-category="interno">
+                            <input type="checkbox" name="parts" value="Fonte de Alimentação">
+                            <div class="part-card-content">
+                                <div class="part-card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                                    </svg>
+                                </div>
+                                <span class="part-card-name">Fonte</span>
+                            </div>
+                        </label>
+
+                        <label class="part-card" data-category="interno">
+                            <input type="checkbox" name="parts" value="Placa de Vídeo (GPU)">
+                            <div class="part-card-content">
+                                <div class="part-card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <rect x="2" y="5" width="20" height="14" rx="2"/>
+                                        <line x1="8" y1="9" x2="8" y2="15"/>
+                                        <line x1="16" y1="9" x2="16" y2="15"/>
+                                        <line x1="12" y1="9" x2="12" y2="15"/>
+                                        <line x1="6" y1="12" x2="10" y2="12"/>
+                                        <line x1="14" y1="12" x2="18" y2="12"/>
+                                    </svg>
+                                </div>
+                                <span class="part-card-name">Placa de Vídeo</span>
+                            </div>
+                        </label>
+
+                        <label class="part-card" data-category="interno">
+                            <input type="checkbox" name="parts" value="Cooler / Ventoinha">
+                            <div class="part-card-content">
+                                <div class="part-card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <path d="M12 2a7 7 0 0 0 0 14 7 7 0 0 0 0-14z" transform="rotate(45 12 12)"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                </div>
+                                <span class="part-card-name">Cooler / Ventoinha</span>
+                            </div>
+                        </label>
+
+                        <label class="part-card" data-category="interno">
+                            <input type="checkbox" name="parts" value="Gabinete">
+                            <div class="part-card-content">
+                                <div class="part-card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <rect x="2" y="3" width="20" height="18" rx="2"/>
+                                        <line x1="2" y1="9" x2="22" y2="9"/>
+                                        <circle cx="8" cy="6" r="1" fill="currentColor"/>
+                                        <circle cx="12" cy="6" r="1" fill="currentColor"/>
+                                        <rect x="6" y="12" width="12" height="6" rx="1"/>
+                                    </svg>
+                                </div>
+                                <span class="part-card-name">Gabinete</span>
+                            </div>
+                        </label>
+
+                        <label class="part-card" data-category="bateria">
+                            <input type="checkbox" name="parts" value="Bateria (Notebook)">
+                            <div class="part-card-content">
+                                <div class="part-card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <rect x="1" y="6" width="18" height="12" rx="2"/>
+                                        <line x1="6" y1="10" x2="6" y2="14"/>
+                                        <line x1="10" y1="9" x2="10" y2="15"/>
+                                        <path d="M23 10v4"/>
+                                    </svg>
+                                </div>
+                                <span class="part-card-name">Bateria</span>
+                            </div>
+                        </label>
+
+                        <label class="part-card" data-category="tela">
+                            <input type="checkbox" name="parts" value="Tela / Display">
+                            <div class="part-card-content">
+                                <div class="part-card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <rect x="2" y="3" width="20" height="14" rx="2"/>
+                                        <line x1="8" y1="21" x2="16" y2="21"/>
+                                        <line x1="12" y1="17" x2="12" y2="21"/>
+                                    </svg>
+                                </div>
+                                <span class="part-card-name">Tela / Display</span>
+                            </div>
+                        </label>
+
+                        <!-- Periféricos -->
+                        <label class="part-card" data-category="periferico">
+                            <input type="checkbox" name="parts" value="Teclado">
+                            <div class="part-card-content">
+                                <div class="part-card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <rect x="2" y="6" width="20" height="12" rx="2"/>
+                                        <line x1="6" y1="10" x2="6" y2="14"/>
+                                        <line x1="10" y1="10" x2="10" y2="14"/>
+                                        <line x1="14" y1="10" x2="14" y2="14"/>
+                                        <line x1="18" y1="10" x2="18" y2="14"/>
+                                        <line x1="6" y1="14" x2="18" y2="14"/>
+                                    </svg>
+                                </div>
+                                <span class="part-card-name">Teclado</span>
+                            </div>
+                        </label>
+
+                        <label class="part-card" data-category="periferico">
+                            <input type="checkbox" name="parts" value="Mouse">
+                            <div class="part-card-content">
+                                <div class="part-card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <rect x="6" y="2" width="12" height="18" rx="6"/>
+                                        <line x1="12" y1="6" x2="12" y2="10"/>
+                                        <line x1="2" y1="18" x2="22" y2="18"/>
+                                    </svg>
+                                </div>
+                                <span class="part-card-name">Mouse</span>
+                            </div>
+                        </label>
+
+                        <label class="part-card" data-category="periferico">
+                            <input type="checkbox" name="parts" value="Monitor">
+                            <div class="part-card-content">
+                                <div class="part-card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <rect x="2" y="3" width="20" height="14" rx="2"/>
+                                        <line x1="8" y1="21" x2="16" y2="21"/>
+                                        <line x1="12" y1="17" x2="12" y2="21"/>
+                                    </svg>
+                                </div>
+                                <span class="part-card-name">Monitor</span>
+                            </div>
+                        </label>
+
+                        <label class="part-card" data-category="periferico">
+                            <input type="checkbox" name="parts" value="Headset / Fone">
+                            <div class="part-card-content">
+                                <div class="part-card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+                                        <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+                                    </svg>
+                                </div>
+                                <span class="part-card-name">Headset / Fone</span>
+                            </div>
+                        </label>
+
+                        <label class="part-card" data-category="periferico">
+                            <input type="checkbox" name="parts" value="Webcam">
+                            <div class="part-card-content">
+                                <div class="part-card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M23 7l-7 5 7 5V7z"/>
+                                        <rect x="1" y="5" width="15" height="14" rx="2"/>
+                                    </svg>
+                                </div>
+                                <span class="part-card-name">Webcam</span>
+                            </div>
+                        </label>
+
+                        <label class="part-card" data-category="periferico">
+                            <input type="checkbox" name="parts" value="Impressora / Scanner">
+                            <div class="part-card-content">
+                                <div class="part-card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                                        <path d="M6 9V3h12v6"/>
+                                        <rect x="6" y="15" width="12" height="6" rx="1"/>
+                                    </svg>
+                                </div>
+                                <span class="part-card-name">Impressora</span>
+                            </div>
+                        </label>
+
+                        <label class="part-card" data-category="cabos">
+                            <input type="checkbox" name="parts" value="Cabos / Adaptadores">
+                            <div class="part-card-content">
+                                <div class="part-card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                                        <circle cx="10" cy="8" r="2" fill="currentColor"/>
+                                    </svg>
+                                </div>
+                                <span class="part-card-name">Cabos / Adaptadores</span>
+                            </div>
+                        </label>
+
+                        <label class="part-card" data-category="rede">
+                            <input type="checkbox" name="parts" value="Roteador / Modem">
+                            <div class="part-card-content">
+                                <div class="part-card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <rect x="2" y="2" width="20" height="8" rx="2"/>
+                                        <rect x="2" y="14" width="20" height="8" rx="2"/>
+                                        <line x1="6" y1="6" x2="6.01" y2="6"/>
+                                        <line x1="6" y1="18" x2="6.01" y2="18"/>
+                                    </svg>
+                                </div>
+                                <span class="part-card-name">Roteador / Modem</span>
+                            </div>
+                        </label>
+
+                        <label class="part-card" data-category="outro">
+                            <input type="checkbox" name="parts" value="Outro componente">
+                            <div class="part-card-content">
+                                <div class="part-card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <line x1="12" y1="8" x2="12" y2="16"/>
+                                        <line x1="8" y1="12" x2="16" y2="12"/>
+                                    </svg>
+                                </div>
+                                <span class="part-card-name">Outro</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="selected-parts-bar" id="selectedPartsBar" style="display:none;">
+                        <span class="selected-parts-label">Peças selecionadas:</span>
+                        <span class="selected-parts-count" id="selectedPartsCount">0</span>
+                        <button type="button" class="clear-parts-btn" id="clearPartsBtn">Limpar</button>
+                    </div>
+                </div>
+
+                <!-- Detalhes do Serviço -->
+                <div class="form-block">
+                    <div class="form-block-header">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                        </svg>
+                        <h3>Detalhes do Serviço</h3>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="parts-urgency">Urgência</label>
+                            <select id="parts-urgency">
+                                <option value="baixa">Baixa - Sem pressa</option>
+                                <option value="normal" selected>Normal - Esta semana</option>
+                                <option value="alta">Alta - Preciso logo</option>
+                                <option value="urgente">Urgente - Ainda hoje!</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="parts-service-type">Tipo de Serviço</label>
+                            <select id="parts-service-type" required>
+                                <option value="">Selecione o tipo</option>
+                                <option value="conserto">Conserto / Reparo</option>
+                                <option value="substituicao">Substituição de Peça</option>
+                                <option value="upgrade">Upgrade / Melhoria</option>
+                                <option value="montagem">Montagem</option>
+                                <option value="limpeza">Limpeza</option>
+                                <option value="diagnostico">Diagnóstico</option>
+                                <option value="orcamento">Somente Orçamento</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group full">
+                        <label for="parts-description">Descrição do Problema / Serviço</label>
+                        <textarea id="parts-description" rows="4" placeholder="Descreva detalhadamente o problema ou o serviço desejado. Ex: O notebook está superaquecendo e desligando sozinho após 10 minutos de uso." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="parts-terms" required>
+                            <span class="checkbox-custom"></span>
+                            <span>Declaro que as informações acima são verdadeiras</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-submit-parts">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    <span>Solicitar Orçamento</span>
+                </button>
+            </form>
+
+            <!-- Sidebar Informativa -->
+            <div class="parts-sidebar">
+                <div class="parts-info-card">
+                    <div class="parts-info-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="16" x2="12" y2="12"/>
+                            <line x1="12" y1="8" x2="12.01" y2="8"/>
+                        </svg>
+                    </div>
+                    <h4>Como funciona?</h4>
+                    <ol class="parts-steps">
+                        <li>Preencha o formulário com os dados do equipamento</li>
+                        <li>Selecione as peças que deseja enviar para manutenção</li>
+                        <li>Descreva o problema detalhadamente</li>
+                        <li>Envie e aguarde nosso contato em até 24h</li>
+                    </ol>
+                </div>
+
+                <div class="parts-info-card">
+                    <div class="parts-info-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <h4>Por que escolher a Full Screen?</h4>
+                    <ul class="parts-benefits">
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Orçamento sem compromisso
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Garantia de 90 dias nos serviços
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Técnicos certificados
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Atendimento rápido e personalizado
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Retirada e entrega disponível
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="parts-cta-card">
+                    <h4>Prefere falar conosco?</h4>
+                    <p>Entre em contato direto pelo WhatsApp</p>
+                    <a href="https://wa.me/message/23LXSDOFKGDJJ1" target="_blank" rel="noopener" class="btn btn-outline whatsapp-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                        <span>Fale pelo WhatsApp</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Sobre -->
     <section id="about" class="about">
         <div class="about-container">
@@ -305,7 +808,7 @@
             </form>
 
             <div class="contact-info">
-                <div class="info-card">
+                <a href="https://wa.me/message/23LXSDOFKGDJJ1" target="_blank" rel="noopener" class="info-card info-card-whatsapp">
                     <div class="info-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.08 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
@@ -313,9 +816,9 @@
                     </div>
                     <div>
                         <h4>Telefone / WhatsApp</h4>
-                        <p>(85) 99771-3219</p>
+                        <span class="contact-whatsapp-number">(85) 99771-3219</span>
                     </div>
-                </div>
+                </a>
 
                 <div class="info-card">
                     <div class="info-icon">
@@ -344,7 +847,7 @@
                 </div>
 
                 <div class="social-links">
-                    <a href="#" class="social-link" aria-label="WhatsApp">
+                    <a href="https://wa.me/message/23LXSDOFKGDJJ1" target="_blank" rel="noopener" class="social-link" aria-label="WhatsApp">
                         <svg viewBox="0 0 24 24" fill="currentColor">
                             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                         </svg>
@@ -372,6 +875,14 @@
             </div>
         </div>
     </section>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/message/23LXSDOFKGDJJ1" target="_blank" rel="noopener" class="whatsapp-float" id="whatsappFloat" aria-label="Fale conosco pelo WhatsApp">
+        <svg class="whatsapp-float-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        <span class="whatsapp-float-tooltip">Fale Conosco</span>
+    </a>
 
     <!-- Footer -->
     <footer class="footer">

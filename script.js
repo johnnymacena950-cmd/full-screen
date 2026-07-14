@@ -11,7 +11,196 @@ document.addEventListener('DOMContentLoaded', () => {
     initCounterAnimation();
     initSmoothScroll();
     initFormSubmit();
+    initPartsForm();
+    initWhatsAppFloat();
 });
+
+/* ============================================
+   FORMULÁRIO DE ENVIO DE PEÇAS
+   ============================================ */
+function initPartsForm() {
+    const form = document.getElementById('partsForm');
+    if (!form) return;
+
+    const checkboxes = form.querySelectorAll('input[name="parts"]');
+    const selectedCount = document.getElementById('selectedPartsCount');
+    const selectedBar = document.getElementById('selectedPartsBar');
+    const clearBtn = document.getElementById('clearPartsBtn');
+    const phoneInput = document.getElementById('parts-phone');
+
+    // Contador de peças selecionadas
+    function updatePartsCount() {
+        const checked = form.querySelectorAll('input[name="parts"]:checked');
+        const count = checked.length;
+        
+        if (selectedCount) {
+            selectedCount.textContent = count;
+            selectedCount.classList.remove('count-pop');
+            // Força reflow para reiniciar animação
+            void selectedCount.offsetWidth;
+            selectedCount.classList.add('count-pop');
+        }
+        
+        if (selectedBar) {
+            selectedBar.style.display = count > 0 ? 'flex' : 'none';
+        }
+    }
+
+    checkboxes.forEach(cb => {
+        cb.addEventListener('change', updatePartsCount);
+    });
+
+    // Botão limpar seleção
+    if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+            checkboxes.forEach(cb => cb.checked = false);
+            updatePartsCount();
+        });
+    }
+
+    // Máscara de telefone
+    if (phoneInput) {
+        phoneInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.slice(0, 11);
+            
+            if (value.length > 2) {
+                value = `(${value.slice(0, 2)}) ${value.slice(2)}`;
+            }
+            if (value.length > 10) {
+                value = `${value.slice(0, 10)}-${value.slice(10)}`;
+            }
+            
+            e.target.value = value;
+        });
+    }
+
+    // Animação de scroll nos cards de peças (com fallback)
+    const partCards = document.querySelectorAll('.part-card');
+    
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('part-card-visible');
+                    }, index * 40);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        partCards.forEach(card => {
+            observer.observe(card);
+        });
+    } else {
+        // Fallback para navegadores sem suporte
+        partCards.forEach(card => card.classList.add('part-card-visible'));
+    }
+
+    // Submissão do formulário - Envio via WhatsApp
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const btn = form.querySelector('.btn-submit-parts');
+        const originalHTML = btn.innerHTML;
+
+        // Coleta os dados do formulário
+        const name = document.getElementById('parts-name').value.trim();
+        const phone = document.getElementById('parts-phone').value.trim();
+        const email = document.getElementById('parts-email').value.trim();
+        const equipType = document.getElementById('parts-equip-type');
+        const equipTypeText = equipType.options[equipType.selectedIndex]?.text || '';
+        const brand = document.getElementById('parts-brand').value.trim();
+        const model = document.getElementById('parts-model').value.trim();
+        const serial = document.getElementById('parts-serial').value.trim();
+        
+        const checkedParts = [];
+        form.querySelectorAll('input[name="parts"]:checked').forEach(cb => {
+            checkedParts.push(cb.value);
+        });
+
+        const urgency = document.getElementById('parts-urgency');
+        const urgencyText = urgency.options[urgency.selectedIndex]?.text || '';
+        const serviceType = document.getElementById('parts-service-type');
+        const serviceTypeText = serviceType.options[serviceType.selectedIndex]?.text || '';
+        const description = document.getElementById('parts-description').value.trim();
+
+        // Estado de loading
+        btn.innerHTML = `
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="spin-icon">
+                <circle cx="12" cy="12" r="10" stroke-dasharray="31.4" stroke-dashoffset="10"/>
+            </svg>
+            <span>Abrindo WhatsApp...</span>
+        `;
+        btn.style.pointerEvents = 'none';
+        btn.classList.add('btn-loading');
+
+        // Monta a mensagem formatada
+        let message = '🧑‍💼 *NOVO PEDIDO DE ORÇAMENTO* 🧑‍💼\n\n';
+        message += '─────────────────────\n';
+        message += '*📋 DADOS DO CLIENTE*\n';
+        message += '─────────────────────\n';
+        message += `👤 *Nome:* ${name}\n`;
+        message += `📞 *Telefone:* ${phone}\n`;
+        if (email) message += `📧 *E-mail:* ${email}\n`;
+        message += '\n─────────────────────\n';
+        message += '*💻 EQUIPAMENTO*\n';
+        message += '─────────────────────\n';
+        message += `📌 *Tipo:* ${equipTypeText}\n`;
+        if (brand) message += `🏷️ *Marca:* ${brand}\n`;
+        if (model) message += `📋 *Modelo:* ${model}\n`;
+        if (serial) message += `🔢 *Nº Série:* ${serial}\n`;
+        message += '\n─────────────────────\n';
+        message += '*🔧 PEÇAS PARA ENVIO*\n';
+        message += '─────────────────────\n';
+        if (checkedParts.length > 0) {
+            checkedParts.forEach((part, i) => {
+                message += `  ${i + 1}. ${part}\n`;
+            });
+        } else {
+            message += '  Nenhuma peça selecionada\n';
+        }
+        message += '\n─────────────────────\n';
+        message += '*⚡ SERVIÇO*\n';
+        message += '─────────────────────\n';
+        message += `⏱️ *Urgência:* ${urgencyText}\n`;
+        message += `🔨 *Tipo:* ${serviceTypeText}\n`;
+        if (description) {
+            message += `\n📝 *Descrição:*\n${description}\n`;
+        }
+        message += '\n─────────────────────\n';
+        message += '✅ *Aguardando retorno!*';
+
+        // Codifica a mensagem para URL
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/message/23LXSDOFKGDJJ1?text=${encodedMessage}`;
+
+        // ABRE O WHATSAPP IMEDIATAMENTE (síncrono - não bloqueado pelo navegador)
+        window.open(whatsappUrl, '_blank');
+
+        // Mostra estado de sucesso (com pequeno delay para UX)
+        setTimeout(() => {
+            btn.innerHTML = `
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>Orçamento Enviado! ✅</span>
+            `;
+            btn.classList.remove('btn-loading');
+            btn.classList.add('btn-success');
+
+            // Restaura o botão e reseta o formulário
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.style.pointerEvents = 'auto';
+                btn.classList.remove('btn-success');
+                form.reset();
+                updatePartsCount();
+            }, 5000);
+        }, 500);
+    });
+}
 
 /* ============================================
    PARTÍCULAS DE FUNDO
@@ -241,6 +430,31 @@ function initSmoothScroll() {
                 behavior: 'smooth',
             });
         });
+    });
+}
+
+/* ============================================
+   WHATSAPP FLOATING BUTTON
+   ============================================ */
+function initWhatsAppFloat() {
+    const whatsappBtn = document.getElementById('whatsappFloat');
+    if (!whatsappBtn) return;
+
+    let lastScroll = 0;
+    const scrollThreshold = 100;
+
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.scrollY;
+        
+        if (currentScroll > scrollThreshold && currentScroll > lastScroll) {
+            // Scrolling down past threshold - hide
+            whatsappBtn.classList.add('whatsapp-hidden');
+        } else {
+            // Scrolling up or at top - show
+            whatsappBtn.classList.remove('whatsapp-hidden');
+        }
+        
+        lastScroll = currentScroll;
     });
 }
 
